@@ -3,7 +3,7 @@ services:
         rtpproxy:
                 build: ./rtpproxy
                 ports:
-                 - 127.0.0.1:12221:12221/udp
+                - 12221:12221/udp
         mysql:
                 image: mysql
                 ports: 
@@ -17,7 +17,7 @@ services:
                  - mysql
                  - rtpproxy 
                 ports:
-                 - 127.0.0.1:5060:5060/udp
+                 - 5060:5060/udp
                 links:
                  - mysql  
                  - rtpproxy      
