@@ -1,0 +1,18 @@
+#FROM alpine
+FROM fedora
+#RUN   apk add --update  bison flex m4  build-base git
+RUN dnf install  --disablerepo=updates* bison flex m4   -y 
+#RUN dnf -y install git
+RUN dnf -y install rtpproxy
+#RUN dnf -y install  ifconfig sysctl
+#RUN dnf -y install bash
+#RUN dnf -y groupinstall "C Development Tools and Libraries"
+RUN echo net.ipv6.conf.all.forwarding=1 >>  /etc/sysctl.conf 
+#RUN /usr/sbin/ifconfig
+EXPOSE 12221 
+
+#ENTRYPOINT ['/usr/bin/rtpproxy -f -F -l $(ip route get 8.8.8.8 | head -1 | cut -d" " -f 7)-s udp:127.0.0.1:12221 -d DBUG']
+#ENTRYPOINT exec  /usr/bin/rtpproxy  -f -F -l 192.168.0.204  -s udp:127.0.0.1:12221  -d DBUG 
+cmd sysctl net.ipv6.conf.all.forwarding
+cmd /usr/bin/rtpproxy   -F -l 192.168.0.204  -s udp:127.0.0.1:12221  -d DBUG
+

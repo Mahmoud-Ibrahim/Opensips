@@ -1,0 +1,23 @@
+version: '3'
+services:
+        rtpproxy:
+                build: ./rtpproxy
+                ports:
+                 - 127.0.0.1:12221:12221/udp
+        mysql:
+                image: mysql
+                ports: 
+                - 3306:3306
+                environment:
+                  myql-mode: ""
+                  MYSQL_ROOT_PASSWORD: mysql 
+        opensips: 
+                build: ./opensips
+                depends_on:
+                 - mysql
+                 - rtpproxy 
+                ports:
+                 - 127.0.0.1:5060:5060/udp
+                links:
+                 - mysql  
+                 - rtpproxy      
